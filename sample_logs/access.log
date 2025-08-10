@@ -1,0 +1,6 @@
+127.0.0.1 - - [31/Jul/2025:10:15:42 +0000] "GET /index.html HTTP/1.1" 200 1043 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+192.168.1.5 - - [31/Jul/2025:10:16:01 +0000] "POST /login HTTP/1.1" 302 512 "-" "Mozilla/5.0 (Linux; Android 11)"
+203.0.113.45 - - [31/Jul/2025:10:17:33 +0000] "GET /products HTTP/1.1" 200 1500 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X)"
+10.0.0.5 - - [31/Jul/2025:10:18:55 +0000] "GET /contact HTTP/1.1" 404 256 "-" "Mozilla/5.0 (iPhone; CPU iPhone OS 13_3 like Mac OS X)"
+198.51.100.1 - - [31/Jul/2025:10:20:10 +0000] "GET /services HTTP/1.1" 500 1024 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+198.52.100.1 - - [31/Jul/2025:10:20:10 +0000] "GET /services HTTP/1.1" 500 1024 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
