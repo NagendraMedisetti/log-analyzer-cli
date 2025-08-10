@@ -1,15 +1,7 @@
-Here’s the cleaned **README.md** without emojis and with the `.gitignore` update so `config.ini` won’t be pushed to GitHub.
-
----
-
-## **README.md**
-
-```markdown
+```
 # Log File Analysis & Reporting System
 
 A Python-based CLI tool that processes web server log files, extracts structured data, stores it in a MySQL database, and generates insightful reports on web traffic patterns, user behavior, and server performance.
-
----
 
 ## Project Goals
 
@@ -18,21 +10,17 @@ A Python-based CLI tool that processes web server log files, extracts structured
 - Enable reporting on top IPs, most visited pages, status codes, and hourly traffic.
 - Simulate a real-world Data Engineering workflow: Ingest → Transform → Store → Analyze.
 
----
-
 ## Tech Stack
 
 | Component           | Technology |
 |---------------------|------------|
 | Programming Language| Python 3.x |
 | Database            | MySQL 8.x  |
-| CLI & Parsing       | `argparse`, `re`, `datetime` |
-| DB Connector        | `mysql-connector-python` |
-| Output Formatting   | `tabulate` |
-| Config Management   | `configparser` |
+| CLI & Parsing       | argparse, re, datetime |
+| DB Connector        | mysql-connector-python |
+| Output Formatting   | tabulate |
+| Config Management   | configparser |
 | IDE/Editor          | VS Code    |
-
----
 
 ## Project Structure
 
@@ -54,8 +42,6 @@ log\_analyzer\_cli/
 └── .gitignore            # Files ignored from Git
 
 ````
-
----
 
 ## Setup Instructions
 
@@ -90,8 +76,6 @@ password = your_password
 database = weblogs_db
 ```
 
----
-
 ## Generating Fake Logs (Optional)
 
 ```bash
@@ -99,8 +83,6 @@ python generate_logs.py
 ```
 
 Generates `fake_access.log` in `sample_logs/`.
-
----
 
 ## Processing Logs
 
@@ -111,8 +93,6 @@ python main.py process_logs sample_logs/access.log --batch_size 100
 * Reads the log file
 * Parses valid lines
 * Inserts data into MySQL in batches
-
----
 
 ## Generating Reports
 
@@ -140,8 +120,6 @@ python main.py generate_report hourly_traffic
 python main.py generate_report status_code_distribution
 ```
 
----
-
 ## Database Schema
 
 ### Table: `log_entries`
@@ -168,8 +146,6 @@ python main.py generate_report status_code_distribution
 | browser             | VARCHAR | Browser name     |
 | device\_type        | VARCHAR | Device type      |
 
----
-
 ## Learning Outcomes
 
 * Parsing semi-structured log data using regex
@@ -178,5 +154,6 @@ python main.py generate_report status_code_distribution
 * Creating SQL-based analytical reports
 * Building CLI tools with Python
 
+```
 
----
+```
