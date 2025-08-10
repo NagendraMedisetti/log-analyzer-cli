@@ -1,4 +1,4 @@
-```
+```markdown
 # Log File Analysis & Reporting System
 
 A Python-based CLI tool that processes web server log files, extracts structured data, stores it in a MySQL database, and generates insightful reports on web traffic patterns, user behavior, and server performance.
@@ -155,5 +155,4 @@ python main.py generate_report status_code_distribution
 * Building CLI tools with Python
 
 ```
-
 ```
