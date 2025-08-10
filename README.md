@@ -1,142 +1,78 @@
-```markdown
+---
+
 # Log File Analysis & Reporting System
 
-A Python-based CLI tool that processes web server log files, extracts structured data, stores it in a MySQL database, and generates insightful reports on web traffic patterns, user behavior, and server performance.
+## Overview
 
-## Project Goals
+The Log File Analysis & Reporting System is a Python-based CLI tool that processes web server log files, parses structured data, stores it in a MySQL database, and generates reports on traffic patterns, user behavior, and server performance.
 
-- Convert unstructured Apache-style log files into structured data.
-- Store structured data in a normalized MySQL database.
-- Enable reporting on top IPs, most visited pages, status codes, and hourly traffic.
-- Simulate a real-world Data Engineering workflow: Ingest → Transform → Store → Analyze.
+It supports both real log ingestion and fake log generation for testing, with report outputs directly in the terminal.
 
-## Tech Stack
+## Objectives
 
-| Component           | Technology |
-|---------------------|------------|
-| Programming Language| Python 3.x |
-| Database            | MySQL 8.x  |
-| CLI & Parsing       | argparse, re, datetime |
-| DB Connector        | mysql-connector-python |
-| Output Formatting   | tabulate |
-| Config Management   | configparser |
-| IDE/Editor          | VS Code    |
+* Parse unstructured web server logs into structured records.
+* Store parsed data in a normalized MySQL schema.
+* Generate insights via CLI commands.
+* Support test log generation for simulation.
+* Maintain configuration separately for security.
 
 ## Project Structure
 
 ```
-
-log\_analyzer\_cli/
-├── main.py               # CLI entry point
-├── log\_parser.py         # Parses log entries
-├── mysql\_handler.py      # Handles MySQL operations
-├── generate\_logs.py      # Generates fake logs (optional)
-├── config.ini            # DB config (not pushed to GitHub)
-├── sample\_logs/          # Sample log files
+log_analyzer_cli/
+├── __pycache__/               # Python cache files
+├── sample_logs/               # Raw log data samples
 │   ├── access.log
-│   └── fake\_access.log
+│   └── fake_access.log
+├── screenshots/               # CLI output screenshots
+│   ├── generate_report_hourly.png
+│   ├── generate_report_status.png
+│   ├── generate_report_top_ips.png
+│   └── generate_report_top_pages.png
 ├── sql/
-│   └── create\_tables.sql # MySQL table schema
-├── requirements.txt      # Python dependencies
-├── README.md             # Project documentation
-└── .gitignore            # Files ignored from Git
-
-````
-
-## Setup Instructions
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/yourusername/log-analyzer-cli.git
-cd log-analyzer-cli
-````
-
-### 2. Create & activate virtual environment
-
-```bash
-python -m venv venv
-venv\Scripts\activate  # Windows
+│   └── create_tables.sql      # MySQL table schema
+├── venv/                      # Virtual environment
+├── .gitignore                 # Ignore rules for Git
+├── config_template.ini        # Template for DB configuration
+├── config.ini                 # Actual DB config (ignored in Git)
+├── generate_logs.py           # Generates fake log entries
+├── log_parser.py              # Parses log entries into structured data
+├── main.py                    # CLI entry point
+├── mysql_handler.py           # MySQL operations (connect, insert, query)
+├── README.md                  # Project documentation
+├── requirements.txt           # Python dependencies
+└── Log File Analysis....pptx  # Project presentation
 ```
 
-### 3. Install dependencies
+## Tech Stack
 
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Configure MySQL connection
-
-Edit `config.ini` (not pushed to GitHub):
-
-```ini
-[mysql]
-host = localhost
-user = root
-password = your_password
-database = weblogs_db
-```
-
-## Generating Fake Logs (Optional)
-
-```bash
-python generate_logs.py
-```
-
-Generates `fake_access.log` in `sample_logs/`.
-
-## Processing Logs
-
-```bash
-python main.py process_logs sample_logs/access.log --batch_size 100
-```
-
-* Reads the log file
-* Parses valid lines
-* Inserts data into MySQL in batches
-
-## Generating Reports
-
-### Top IP addresses
-
-```bash
-python main.py generate_report top_n_ips --value 5
-```
-
-### Top visited pages
-
-```bash
-python main.py generate_report top_n_pages --value 5
-```
-
-### Hourly traffic
-
-```bash
-python main.py generate_report hourly_traffic
-```
-
-### Status code distribution
-
-```bash
-python main.py generate_report status_code_distribution
-```
+| Component            | Technology             |
+| -------------------- | ---------------------- |
+| Programming Language | Python 3.x             |
+| Database             | MySQL 8.x              |
+| CLI & Parsing        | argparse, re, datetime |
+| DB Connector         | mysql-connector-python |
+| Output Formatting    | tabulate               |
+| Config Management    | configparser           |
+| IDE/Editor           | VS Code                |
 
 ## Database Schema
 
-### Table: `log_entries`
+### `log_entries`
 
-| Field           | Type     | Description            |
-| --------------- | -------- | ---------------------- |
-| id              | INT PK   | Unique log ID          |
-| ip\_address     | VARCHAR  | Source IP address      |
-| timestamp       | DATETIME | Request time           |
-| method          | VARCHAR  | HTTP method            |
-| path            | VARCHAR  | Requested URL          |
-| status\_code    | INT      | HTTP status code       |
-| bytes\_sent     | INT      | Size of response       |
-| referrer        | VARCHAR  | Referrer URL           |
-| user\_agent\_id | INT FK   | Links to `user_agents` |
+| Field           | Type     | Description           |
+| --------------- | -------- | --------------------- |
+| id              | INT PK   | Unique log ID         |
+| ip\_address     | VARCHAR  | Source IP             |
+| timestamp       | DATETIME | Request time          |
+| method          | VARCHAR  | HTTP method           |
+| path            | VARCHAR  | Requested URL         |
+| status\_code    | INT      | HTTP status code      |
+| bytes\_sent     | INT      | Size of response      |
+| referrer        | VARCHAR  | Referrer URL          |
+| user\_agent\_id | INT FK   | Links to user\_agents |
 
-### Table: `user_agents`
+### `user_agents`
 
 | Field               | Type    | Description      |
 | ------------------- | ------- | ---------------- |
@@ -146,13 +82,30 @@ python main.py generate_report status_code_distribution
 | browser             | VARCHAR | Browser name     |
 | device\_type        | VARCHAR | Device type      |
 
-## Learning Outcomes
+## CLI Workflow
 
-* Parsing semi-structured log data using regex
-* Designing relational database schemas
-* Batch insertion into MySQL
-* Creating SQL-based analytical reports
-* Building CLI tools with Python
+1. **Log Source** – Take input from `sample_logs/` or generated logs.
+2. **Parsing** – `log_parser.py` uses regex to extract fields.
+3. **Database Handling** – `mysql_handler.py` connects to MySQL, creates tables, and inserts batches.
+4. **Reporting** – `main.py` triggers SQL queries and displays results with `tabulate`.
 
-```
-```
+## Example Commands
+
+* Process logs:
+
+  ```bash
+  python main.py process_logs sample_logs/access.log --batch_size 100
+  ```
+* Generate report (top pages):
+
+  ```bash
+  python main.py generate_report top_n_pages --value 5
+  ```
+* Hourly traffic:
+
+  ```bash
+  python main.py generate_report hourly_traffic
+  ```
+
+---
+
